@@ -4,7 +4,7 @@ class CreateNewProject {
       this.ProjectsPage = page.getByRole('link', { name: 'Projects' });
         this.NewProjectButton = page.getByRole('button', { name: /^New Project/ });
         this.SelectClientButton = page.getByRole('button', { name: 'Select Client' });
-        this.ClientName = page.getByText('CoDesign LtdBanani 17,House 11,DhakaInactive')
+        this.ClientName = page.getByText('Mavii ')
         this.ClienSubmittButton= page.getByRole('button', { name: 'Use this client' })
         this.ProjectNameInput = page.getByRole('textbox', { name: 'Enter project name' });
         this.ProjectType = page.getByRole('button', { name: 'Retainer' })
@@ -23,7 +23,7 @@ class CreateNewProject {
     async createNewProject() {
       await this.NewProjectButton.click();
     }
-  async NewProjectForm(projectName, briefDescription) {
+  async NewProjectForm(projectName, EProjectBrief) {
       await this.SelectClientButton.click();
       await this.ClientName.click();
       await this.ClienSubmittButton.click();
@@ -33,7 +33,7 @@ class CreateNewProject {
       await this.StartDate.click();
       await this.EndDateCalender.click();
       await this.EndDate.click();
-      await this.BriefDescription.fill(briefDescription);
+      await this.BriefDescription.fill(EProjectBrief);
       await this.SubmitButton.click();
     }
 
