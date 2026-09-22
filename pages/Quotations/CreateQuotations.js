@@ -3,7 +3,8 @@ class CreateQuotations {
       this.page = page;
       this.QuotationsPage = page.getByRole('link', { name: 'Quotations' });
       this.NewQuotationButton = page.getByRole('button', { name: /^New Quotation/ });
-      this.ClientQuotationName = page.getByText('Mavii ')
+      this.SelectProjectModal = page.locator('div').filter({ hasText: 'Select a projectSearch all' }).nth(4)
+      this.ClientQuotationName = page.getByText('BataBD')
       this.ClienSelectButton= page.getByRole('button', { name: 'Use this project' })
       this.QuotationDateCalender = page.getByRole('textbox', { name: 'Select date' })
       this.QuotationDate = page.getByText('24')
@@ -32,8 +33,9 @@ class CreateQuotations {
     async CreateQuotations() {
       await this.NewQuotationButton.click();
     }
-dayCompleteInput = 18
+
   async NewQuotationForm(GroupTitle,ItemnameOne,UnitPrices,ItemNameTwo,ItemNameThree,termsConditions,AgencyFees,discount,vatValues,dayCompleteInput) {
+        await this.SelectProjectModal.click()
         await this.ClientQuotationName.click();
         await this.ClienSelectButton.click();
         await this.QuotationDateCalender.click();

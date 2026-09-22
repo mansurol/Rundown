@@ -2,9 +2,9 @@ class CreateNewProject {
     constructor(page) {
       this.page = page;
       this.ProjectsPage = page.getByRole('link', { name: 'Projects' });
-        this.NewProjectButton = page.getByRole('button', { name: /^New Project/ });
-        this.SelectClientButton = page.getByRole('button', { name: 'Select Client' });
-        this.ClientName = page.getByText('Mavii ')
+        this.NewProjectButton = page.getByRole('button', { name: 'New Project (Alt Shift N)' });
+        this.ClientModal = page.locator('div').filter({ hasText: 'Select a clientSearch all' }).nth(4)
+        this.ClientName = page.getByText('BBata17 No Road 11 No House')
         this.ClienSubmittButton= page.getByRole('button', { name: 'Use this client' })
         this.ProjectNameInput = page.getByRole('textbox', { name: 'Enter project name' });
         this.ProjectType = page.getByRole('button', { name: 'Retainer' })
@@ -24,7 +24,8 @@ class CreateNewProject {
       await this.NewProjectButton.click();
     }
   async NewProjectForm(projectName, EProjectBrief) {
-      await this.SelectClientButton.click();
+      //await this.SelectClientButton.click();
+      await this.ClientModal.click()
       await this.ClientName.click();
       await this.ClienSubmittButton.click();
       await this.ProjectNameInput.fill(projectName);
