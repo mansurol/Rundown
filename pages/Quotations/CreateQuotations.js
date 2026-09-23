@@ -4,7 +4,7 @@ class CreateQuotations {
       this.QuotationsPage = page.getByRole('link', { name: 'Quotations' });
       this.NewQuotationButton = page.getByRole('button', { name: /^New Quotation/ });
       this.SelectProjectModal = page.locator('div').filter({ hasText: 'Select a projectSearch all' }).nth(4)
-      this.ClientQuotationName = page.getByText('BataBD')
+      this.ClientQuotationName = page.getByText('GG')
       this.ClienSelectButton= page.getByRole('button', { name: 'Use this project' })
       this.QuotationDateCalender = page.getByRole('textbox', { name: 'Select date' })
       this.QuotationDate = page.getByText('24')
@@ -24,6 +24,8 @@ class CreateQuotations {
       this.discountAmount = page.locator('input[name="discountAmount"]')
       this.vatValue = page.locator('input[name="vatValue"]')
       this.SaveButton = page.getByRole('button', { name: 'Save quotation' })
+      this.SentButton = page.getByRole('button', { name: 'Mark as sent' })
+      // this.FinalSentButton = page.getByRole('dialog').getByRole('button', { name: 'Mark as sent' }).last()
     }
 
     async goto() {
@@ -57,6 +59,8 @@ class CreateQuotations {
         await this.discountAmount.fill(discount);
         await this.vatValue.fill(vatValues);
         await this.SaveButton.click();
+        await this.SentButton.click()
+        // await this.FinalSentButton.click()
   }
 }
   module.exports = CreateQuotations;

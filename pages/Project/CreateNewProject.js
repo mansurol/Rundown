@@ -4,7 +4,7 @@ class CreateNewProject {
       this.ProjectsPage = page.getByRole('link', { name: 'Projects' });
         this.NewProjectButton = page.getByRole('button', { name: 'New Project (Alt Shift N)' });
         this.ClientModal = page.locator('div').filter({ hasText: 'Select a clientSearch all' }).nth(4)
-        this.ClientName = page.getByText('BBata17 No Road 11 No House')
+        this.ClientName = page.getByText('GG')
         this.ClienSubmittButton= page.getByRole('button', { name: 'Use this client' })
         this.ProjectNameInput = page.getByRole('textbox', { name: 'Enter project name' });
         this.ProjectType = page.getByRole('button', { name: 'Retainer' })

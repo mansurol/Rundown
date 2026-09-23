@@ -1,14 +1,14 @@
 import { test } from '@playwright/test';
 import Login from '../pages/Auth/Login'
-import WorkOrder from '../pages/WorkOrders/WorkOrders'
+import Invoice from '../pages/Invoices/CreateInvoices'
 
 require('dotenv').config();
 
 
-test('WorkOrder', async ({ page }) => {
+test('Invoices', async ({ page }) => {
 
    const login = new Login(page);
-   const workOrder = new WorkOrder(page);
+   const invoice = new Invoice(page);
 
    await page.goto(process.env.Url);
    
@@ -17,10 +17,11 @@ test('WorkOrder', async ({ page }) => {
    await login.fillPassword(process.env.password);
    await login.clickSignInButton();
 
-   await workOrder.goto();
-   await workOrder.CreateWorkOrderButton()
-   await workOrder.NewworkOrder()
-
+   await invoice.goto();
+   await invoice.CreateInvoiceButton()
+   await invoice.NewInvoice()
+   await invoice.SumitInvoice()
+   await invoice.DownloadPDF()
    
 
 
