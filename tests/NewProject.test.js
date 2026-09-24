@@ -19,7 +19,7 @@ test('CreateProject', async ({ page }) => {
 
    await createNewProject.goto();
    await createNewProject.createNewProject();
-   await createNewProject.NewProjectForm(process.env.ProjectName, process.env.EProjectBrief);
+   await createNewProject.NewProjectForm(process.env.ProjectName, process.env.EProjectBrief,process.env.CompanyName);
 
 
    

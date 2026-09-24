@@ -16,7 +16,6 @@ test('Clients', async ({ page }) => {
    await login.fillPassword(process.env.password);
    await login.clickSignInButton();
 
-//Navigate to Clients page
    await clients.goto();
    await clients.createClient(process.env.CompanyName, process.env.Address, process.env.TIN, 
     process.env.BIN, process.env.ContactPersonName, process.env.ContactPersonDesignation, 

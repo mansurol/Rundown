@@ -3,8 +3,8 @@ class CreateNewProject {
       this.page = page;
       this.ProjectsPage = page.getByRole('link', { name: 'Projects' });
         this.NewProjectButton = page.getByRole('button', { name: 'New Project (Alt Shift N)' });
-        this.ClientModal = page.locator('div').filter({ hasText: 'Select a clientSearch all' }).nth(4)
-        this.ClientName = page.getByText('GG')
+        this.ClientModal = page.locator('.ant-input-affix-wrapper.ant-input-affix-wrapper-lg')
+        this.SearchClient = page.getByRole('textbox', { name: 'Search by company name' })
         this.ClienSubmittButton= page.getByRole('button', { name: 'Use this client' })
         this.ProjectNameInput = page.getByRole('textbox', { name: 'Enter project name' });
         this.ProjectType = page.getByRole('button', { name: 'Retainer' })
@@ -23,10 +23,12 @@ class CreateNewProject {
     async createNewProject() {
       await this.NewProjectButton.click();
     }
-  async NewProjectForm(projectName, EProjectBrief) {
+  async NewProjectForm(projectName, EProjectBrief,CompanyName) {
       //await this.SelectClientButton.click();
       await this.ClientModal.click()
-      await this.ClientName.click();
+      const clientResult = this.page.getByText(CompanyName, { exact: false });
+      await clientResult.waitFor({ state: 'visible' });
+      await clientResult.click(); 
       await this.ClienSubmittButton.click();
       await this.ProjectNameInput.fill(projectName);
       await this.ProjectType.click();

@@ -19,5 +19,8 @@ test('CreateQuotations', async ({ page }) => {
 //Navigate to Quotations page
    await quotations.goto();
    await quotations.CreateQuotations();
-   await quotations.NewQuotationForm(process.env.GroupTitle,process.env.ItemnameOne,process.env.UnitPrices,process.env.ItemNameTwo,process.env.ItemNameThree,process.env.termsConditions,process.env.AgencyFees,process.env.discount,process.env.vatValues,process.env.dayCompleteInput);
+   await quotations.NewQuotationForm(process.env.ProjectName,process.env.GroupTitle,process.env.ItemnameOne,process.env.UnitPrices,process.env.ItemNameTwo,process.env.ItemNameThree,process.env.termsConditions,process.env.AgencyFees,process.env.discount,process.env.vatValues,process.env.dayCompleteInput);
+   
+
 });
+

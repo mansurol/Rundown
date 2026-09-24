@@ -8,10 +8,10 @@ class  Clients {
       this.InputTIN = page.getByRole('textbox', { name: 'Enter TIN' })
       this.InputBIN = page.getByRole('textbox', { name: 'Enter BIN' })
       this.ContactPerson = page.getByRole('button', { name: 'Add contact' })
-      this.ContactPersonName = page.getByRole('textbox', { name: 'Full name' })
+      this.ContactPersonName = page.getByPlaceholder('Full name')
       this.ContactPersonDesignation = page.getByRole('textbox', { name: 'e.g. Head of Marketing' })
-      this.ContactPersonPhone = page.getByRole('textbox', { name: '01XXXXXXXXX' })
       this.ContactPersonEmail = page.getByRole('textbox', { name: 'name@company.com' })
+      this.ContactPersonPhone = page.getByRole('textbox', { name: '01XXXXXXXXX' })
       this.SaveButton = page.getByRole('button', { name: 'Save client' })
       this.ExportButton = page.getByRole('button', { name: 'Export', exact: true })
       
@@ -28,11 +28,11 @@ class  Clients {
       await this.InputAddress.fill(Address);
       await this.InputTIN.fill(TIN);
       await this.InputBIN.fill(BIN);
-      await this.ContactPerson.click();
       await this.ContactPersonName.fill(ContactPersonName);
       await this.ContactPersonDesignation.fill(ContactPersonDesignation);
-      await this.ContactPersonPhone.fill(ContactPersonPhone);
       await this.ContactPersonEmail.fill(ContactPersonEmail);
+      await this.ContactPersonPhone.fill(ContactPersonPhone);
+
       await this.SaveButton.click(); 
     
   }
