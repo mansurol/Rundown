@@ -19,7 +19,7 @@ test('WorkOrder', async ({ page }) => {
 
    await workOrder.goto();
    await workOrder.CreateWorkOrderButton()
-   await workOrder.NewworkOrder()
+   await workOrder.NewworkOrder(process.env.ProjectName)
 
    
 

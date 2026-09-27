@@ -1,66 +1,93 @@
-import { test, expect } from '@playwright/test';
-import Login from '../pages/Auth/Login'
-import Clients from '../pages/clients/Clients'
-import CreateNewProject from '../pages/Project/CreateNewProject'
-import Quotation from '../pages/Quotations/CreateQuotations'
-  
+import { test, expect } from "@playwright/test";
+import Login from "../pages/Auth/Login";
+import Clients from "../pages/clients/Clients";
+import CreateNewProject from "../pages/Project/CreateNewProject";
+import Quotation from "../pages/Quotations/CreateQuotations";
+import WorkOrder from "../pages/WorkOrders/WorkOrders";
+import Invoice from "../pages/Invoices/CreateInvoices";
 
+require("dotenv").config();
 
-require('dotenv').config();
+test("FullBusinessJourney", async ({ page }) => {
+  const login = new Login(page);
+  const clients = new Clients(page);
+  const createNewProject = new CreateNewProject(page);
+  const quotations = new Quotation(page);
+  const workOrder = new WorkOrder(page);
+  const invoice = new Invoice(page);
 
+  //Login
 
-test('FullBusinessJourney', async ({ page }) => {
-   const login = new Login(page);
-   const clients = new Clients(page);
-   const createNewProject = new CreateNewProject(page);
-   const quotations = new Quotation(page);
-   //Login
-   
-  await test.step('Login', async () => {
+  await test.step("Login", async () => {
+    await page.goto(process.env.Url);
 
-   await page.goto(process.env.Url);
-   
-   await login.fillEmail(process.env.Email);
-   await login.fillPassword(process.env.password);
-   await login.clickSignInButton();
+    await login.fillEmail(process.env.Email);
+    await login.fillPassword(process.env.password);
+    await login.clickSignInButton();
   });
 
+  //New Client Create
 
- //New Client Create
-
-    await test.step('Create Client', async () => {
-
+  await test.step("Create Client", async () => {
     await clients.goto();
     await clients.createClient(
       process.env.CompanyName,
       process.env.Address,
-      process.env.TIN, 
+      process.env.TIN,
       process.env.BIN,
       process.env.ContactPersonName,
-      process.env.ContactPersonDesignation, 
+      process.env.ContactPersonDesignation,
       process.env.ContactPersonEmail,
       process.env.ContactPersonPhone,
-      );
+    );
+  });
 
-   });
+  //Project Create
 
-   //Project Create
-
-   await test.step('{ProjectCreate', async () => {
-
+  await test.step("{ProjectCreate", async () => {
     await createNewProject.goto();
     await createNewProject.createNewProject();
-    await createNewProject.NewProjectForm(process.env.ProjectName, process.env.EProjectBrief,process.env.CompanyName);
-    
-
+    await createNewProject.NewProjectForm(
+      process.env.ProjectName,
+      process.env.EProjectBrief,
+      process.env.CompanyName,
+    );
   });
-   
- 
- //QuotationCreate 
 
-   await quotations.goto();
-   await quotations.CreateQuotations();
-   await quotations.NewQuotationForm(process.env.ProjectName,process.env.GroupTitle,process.env.ItemnameOne,process.env.UnitPrices,process.env.ItemNameTwo,process.env.ItemNameThree,process.env.termsConditions,process.env.AgencyFees,process.env.discount,process.env.vatValues,process.env.dayCompleteInput);
+  //QuotationCreate
+  await test.step("{QuotationCreate", async () => {
+    await quotations.goto();
+    await quotations.CreateQuotations();
+    await quotations.NewQuotationForm(
+      process.env.ProjectName,
+      process.env.GroupTitle,
+      process.env.ItemnameOne,
+      process.env.UnitPrices,
+      process.env.ItemNameTwo,
+      process.env.ItemNameThree,
+      process.env.termsConditions,
+      process.env.AgencyFees,
+      process.env.discount,
+      process.env.vatValues,
+      process.env.dayCompleteInput,
+    );
+  });
 
+  //WorkOrder
 
+  await test.step("WorkOrder", async () => {
+    await workOrder.goto();
+    await workOrder.CreateWorkOrderButton();
+    await workOrder.NewworkOrder(process.env.ProjectName);
+  });
+
+  //Invoice
+
+  await test.step("Invoice", async () => {
+    await invoice.goto();
+    await invoice.CreateInvoiceButton();
+    await invoice.NewInvoice(process.env.ProjectName);
+    await invoice.SumitInvoice();
+    await invoice.DownloadPDF();
+  });
 });

@@ -1,23 +1,24 @@
 const path = require('path');
-
+const { expect } = require('@playwright/test');
 class CreateWorkOrder {
     constructor(page) {
       this.page = page;
       this.WorkOrderPage = page.getByRole('link', { name: 'Work orders' });
       this.NewWorkOrderButton = page.getByRole('button', { name: /^New Work Order/ });
-      this.SelectQuotationName = page.getByText('GOML')
+      this.SearchQuotation  = page.getByRole('textbox', { name: 'Search by number, project or' })
+
       this.SelectQuotationButton = page.getByRole('button', { name: 'Use this quotation' });
       this.WorkOrderdateCalender = page.getByRole('textbox', { name: 'Select date' }).first();
       this.ReceivedFromClient = page.getByRole('textbox', { name: 'Select date' }).nth(1);
       this.FileInput = page.locator('input[type="file"]');
       this.PdfFile = path.resolve(__dirname, '../../fixtures/QUOTATION__Tech-2.pdf');
       this.paymentMilestone = page.getByRole('button', { name: 'Add milestone' })
-      this.PaymentShedule = page.locator('input[name="paymentSchedules.0.label"]')
+      this.PaymentShedule = page.getByRole('textbox', { name: 'Milestone' }).nth(0)
       this.PaymentPersentange = page.locator('.ant-input-number-input').nth(0)
       this.PaymentDateCalender = page.getByRole('textbox', { name: 'Select date' }).nth(2)
       this.paymentMilestoneTwo = page.getByRole('button', { name: 'Add milestone' })
-      this.PaymentSheduleTwo = page.locator('input[name="paymentSchedules.1.label"]')
-      this.PaymentPersentangTwo = page.locator('.ant-input-number-input').nth(1);
+      this.PaymentSheduleTwo = page.getByRole('textbox', { name: 'Milestone' }).nth(1)
+      this.PaymentPersentangTwo = page.getByRole('spinbutton').nth(1)
       this.PaymentDateCalenderTwo = page.getByRole('textbox', { name: 'Select date' }).nth(3)
       this.endDate =  page.getByRole('cell', { name: '30', description: '2026-09-30' })
       this.RaiseWorkOrder = page.getByRole('button', { name: 'Raise work order' })
@@ -33,25 +34,24 @@ class CreateWorkOrder {
       await this.NewWorkOrderButton.click();
     }
 
-    async NewworkOrder() {
-      await this.SelectQuotationName.click();
+    async NewworkOrder(ProjectName) {
+      await this.SearchQuotation.fill(ProjectName);
+      const SelectQuotation = this.page.getByText(ProjectName, {exact: false});
+      await expect(SelectQuotation).toBeVisible();
+      await SelectQuotation.click();
+      await expect(this.SelectQuotationButton).toBeEnabled();
       await this.SelectQuotationButton.click();
-
       await this.WorkOrderdateCalender.click();
       await this.page.getByRole('table').getByText('24', { exact: true }).click();
-
       await this.ReceivedFromClient.click();
       await this.page.getByRole('table').getByText('23', { exact: true }).click();
-
       await this.FileInput.setInputFiles(this.PdfFile);
-      
       await this.paymentMilestone.click()
       await this.PaymentShedule.fill("1st")
       await this.PaymentPersentange.fill("50")
       await this.PaymentDateCalender.click()
       await this.page.getByRole('table').getByText('24').nth(0).click()
-            await this.paymentMilestoneTwo.click()
-
+      await this.paymentMilestoneTwo.click()
       await this.PaymentSheduleTwo.fill("2nd")
       await this.PaymentPersentangTwo.fill("50")
       await this.PaymentDateCalenderTwo.click()

@@ -19,7 +19,7 @@ test('Invoices', async ({ page }) => {
 
    await invoice.goto();
    await invoice.CreateInvoiceButton()
-   await invoice.NewInvoice()
+   await invoice.NewInvoice(process.env.ProjectName)
    await invoice.SumitInvoice()
    await invoice.DownloadPDF()
    
