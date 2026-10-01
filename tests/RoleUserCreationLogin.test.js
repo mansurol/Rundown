@@ -3,6 +3,7 @@ import Login from "../pages/Auth/Login";
 import RolesCreate from "../pages/Roles/RolesCreate";
 import NewUserCreate from "../pages/User/NewUserCreate";
 import Logout from "../pages/Auth/LogOut";
+import NewUserLogin from "../pages/Auth/NewUserLogin";
 
 require("dotenv").config();
 
@@ -11,6 +12,7 @@ test("CreateRoles", async ({ page }) => {
   const rolesCreate = new RolesCreate(page);
   const userCreate = new NewUserCreate(page);
   const logout = new Logout(page);
+  const newLogin = new NewUserLogin(page);
 
   await page.goto(process.env.Url);
 
@@ -37,4 +39,9 @@ test("CreateRoles", async ({ page }) => {
 
   //Logout
   await logout.logout();
+
+  //Login with the newly created user
+  await newLogin.fillmail(process.env.mail);
+  await newLogin.fillPass(process.env.pass);
+  await newLogin.clickSignInButton();
 });
