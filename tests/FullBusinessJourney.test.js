@@ -5,6 +5,7 @@ import CreateNewProject from "../pages/Project/CreateNewProject";
 import Quotation from "../pages/Quotations/CreateQuotations";
 import WorkOrder from "../pages/WorkOrders/WorkOrders";
 import Invoice from "../pages/Invoices/CreateInvoices";
+import Payment from "../pages/Payments/Payment";
 
 require("dotenv").config();
 
@@ -15,12 +16,12 @@ test("FullBusinessJourney", async ({ page }) => {
   const quotations = new Quotation(page);
   const workOrder = new WorkOrder(page);
   const invoice = new Invoice(page);
+  const payment = new Payment(page);
 
   //Login
 
   await test.step("Login", async () => {
     await page.goto(process.env.Url);
-
     await login.fillEmail(process.env.Email);
     await login.fillPassword(process.env.password);
     await login.clickSignInButton();
@@ -90,4 +91,10 @@ test("FullBusinessJourney", async ({ page }) => {
     await invoice.SumitInvoice();
     await invoice.DownloadPDF();
   });
+
+  // await test.step("Payments", async () => {
+  //   await payment.goto();
+  //   await payment.CreateInvoiceButton();
+  //   await payment.NewInvoice();
+  // });
 });
