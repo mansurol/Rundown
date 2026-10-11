@@ -5,13 +5,10 @@ class NewUserCreate {
     this.NewUserButton = page.getByRole("button", {
       name: "New user (Alt Shift N)",
     });
-    this.Name = page.getByRole("textbox", { name: "e.g. Ayesha Siddiqua" });
-    this.Email = page.getByRole("textbox", { name: "name@co.design" });
-    this.Password = page.getByRole("textbox", { name: "Enter a password" });
-    this.RePassword = page.getByRole("textbox", {
-      name: "Re-enter the password",
-    });
-    this.SetRole = page.getByText("Admin", { exact: true });
+    this.Name = page.getByRole("textbox", { name: "Full name" });
+    this.Email = page.getByRole("textbox", { name: "Email (@co.design)" });
+    this.Password = page.getByRole("textbox", { name: "Temporary password" });
+    this.RePassword = page.getByRole("textbox", { name: "Confirm password" });
     this.SubmitButton = page.getByRole("button", { name: "Create user" });
   }
 
@@ -27,7 +24,10 @@ class NewUserCreate {
     await this.Email.fill(mail);
     await this.Password.fill(pass);
     await this.RePassword.fill(repass);
-    await this.page.getByText(roleName, { exact: true }).click();
+    const SetRole = this.page.getByRole("checkbox", {
+      name: roleName,
+    });
+    await SetRole.click();
     await this.SubmitButton.click();
   }
 }
