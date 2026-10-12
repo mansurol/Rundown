@@ -33,24 +33,53 @@ class CreateQuotations {
     this.dayToCompleteInput = page.locator('input[name="daysToComplete"]');
 
     this.GroupTitleInput = page.getByRole("textbox", { name: "Group title" });
-    this.ItemOneTitle = page.getByRole("textbox", { name: "Item name" });
-    this.UnitPrice = page.getByRole("spinbutton", { name: "Unit price" });
-    this.QTY = page.getByRole("spinbutton", { name: "Qty" });
-    this.ItemTwo = page.getByRole("button", { name: "Add item" });
-    this.ItemTwoName = page.getByRole("textbox", { name: "Item name" }).nth(1);
-    this.TermsAndConditions = page.locator(".tiptap");
-    this.AgencyFee = page.locator('input[name="afs"]');
-    this.discountAmount = page.locator('input[name="discountAmount"]');
-    this.vatValue = page.locator('input[name="vatValue"]');
-    this.SaveButton = page.getByRole("button", { name: "Save quotation" });
-    this.SendQButton = page.getByRole("button", { name: "Mark as sent" });
-    this.FinalSentQButton = page.getByRole("button", {
-      name: "Sent Quotation",
+    this.ItemNameInput = page.getByRole("textbox", { name: "Item name" });
+    this.ItemPrice = page.getByRole("spinbutton", { name: "Unit price" });
+    this.ItemQty = page.getByRole("spinbutton", { name: "Qty" });
+
+    this.AddItemButton = page.getByRole("button", { name: "Add item" });
+
+    this.ItemNameInputTwo = page
+      .getByRole("textbox", { name: "Item name" })
+      .nth(1);
+    this.ItemPriceTwo = page
+      .getByRole("spinbutton", { name: "Unit price" })
+      .nth(1);
+    this.ItemQtyTwo = page.getByRole("spinbutton", { name: "Qty" }).nth(1);
+
+    this.TermsAndConditionsInput = page
+      .getByRole("paragraph")
+      .filter({ hasText: /^$/ });
+
+    this.AgencyFeeInput = page.getByRole("spinbutton", {
+      name: "Agency fee percentage",
     });
-    this.ApproveQButton = page.getByRole("button", { name: "Approve" });
-    this.FinalApproveQButton = page
+    this.DiscountInput = page.getByRole("spinbutton", {
+      name: "Discount percentage",
+    });
+    this.VatInput = page.getByRole("spinbutton", { name: "VAT percentage" });
+    this.SaveButton = page.getByRole("button", { name: "Save quotation" });
+    this.MarkSentButton = page
+      .getByRole("button", { name: "Mark as sent" })
+      .first();
+    this.MarkSent = page.getByRole("button", { name: "Sent Quotation" });
+
+    this.ApproveQuotationButton = page.getByRole("button", {
+      name: "Approve",
+      exact: true,
+    });
+    this.ChooseProject = page.getByRole("button", { name: "Choose a project" });
+    this.ProjectSelect = page.getByRole("radio", {
+      name: "AA Website AAA Planning",
+    });
+    this.useProjectButton = page.getByRole("button", { name: "Use project" });
+    this.ApproveQut = page
       .getByRole("dialog")
       .getByRole("button", { name: "Approve" });
+
+    this.SearchProjectName = page.getByRole("textbox", {
+      name: "Search by project or client",
+    });
   }
 
   async goto() {
@@ -62,18 +91,23 @@ class CreateQuotations {
   }
 
   async NewQuotationForm(
-    ProjectName,
+    CompanyName,
+    dayCompleteInput,
     GroupTitle,
-    ItemNameTwo,
-    termsConditions,
-    AgencyFees,
-    discount,
-    vatValues,
+    TitleName,
+    ItemNitPrice,
+    itemQuantity,
+    TitleNameTwo,
+    ItemNitPriceTwo,
+    itemQuantityTwo,
+    Agencyfee,
+    Discount,
+    Vat,
   ) {
     await this.SelectClientModal.click();
-    await this.SearchClientName.fill(ProjectName);
+    await this.SearchClientName.fill(CompanyName);
     const Project = this.page.getByRole("radio", {
-      name: new RegExp(`^${ProjectName}\\b`),
+      name: new RegExp(`^${CompanyName}\\b`),
     });
     await expect(Project).toBeVisible();
     await Project.click();
@@ -85,24 +119,42 @@ class CreateQuotations {
     await this.CurrencyName.click();
     await this.SelectCurrencyButton.click();
     await this.dayToCompleteSwitch.click();
-    await this.dayToCompleteInput.fill("20");
+    await this.dayToCompleteInput.fill(dayCompleteInput);
 
     await this.GroupTitleInput.fill(GroupTitle);
-    await this.ItemOneTitle.fill("design and development");
-    await this.UnitPrice.fill("100");
-    await this.QTY.fill("2");
-    await this.ItemTwo.click();
-    await this.ItemTwoName.fill(ItemNameTwo);
+    await this.ItemNameInput.fill(TitleName);
+    await this.ItemPrice.fill(ItemNitPrice);
+    await this.ItemQty.fill(itemQuantity);
+    await this.AddItemButton.click();
 
-    await this.TermsAndConditions.fill(termsConditions);
-    await this.AgencyFee.fill(AgencyFees);
-    await this.discountAmount.fill(discount);
-    await this.vatValue.fill(vatValues);
+    await this.ItemNameInputTwo.fill(TitleNameTwo);
+    await this.ItemPriceTwo.fill(ItemNitPriceTwo);
+    await this.ItemQtyTwo.fill(itemQuantityTwo);
+
+    await this.TermsAndConditionsInput.fill(
+      "This is a test for the terms and conditions.",
+    );
+    await this.AgencyFeeInput.fill(Agencyfee);
+    await this.DiscountInput.fill(Discount);
+    await this.VatInput.fill(Vat);
+
     await this.SaveButton.click();
-    await this.SendQButton.click();
-    await this.FinalSentQButton.click();
-    await this.ApproveQButton.click();
-    await this.FinalApproveQButton.click();
+  }
+  async QuotationSent() {
+    await this.MarkSentButton.click();
+    await this.MarkSent.click();
+  }
+  async ApproveQuotation(ProjectName) {
+    await this.ApproveQuotationButton.click();
+    await this.ChooseProject.click();
+    await this.SearchProjectName.fill(ProjectName);
+    const PSelect = this.page.getByRole("radio", {
+      name: new RegExp(`^${ProjectName}\\b`),
+    });
+    await expect(PSelect).toBeVisible();
+    await PSelect.click();
+    await this.useProjectButton.click();
+    await this.ApproveQut.click();
   }
 }
 module.exports = CreateQuotations;

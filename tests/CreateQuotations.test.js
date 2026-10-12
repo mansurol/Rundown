@@ -19,16 +19,18 @@ test("CreateQuotations", async ({ page }) => {
   await quotations.CreateQuotations();
   await quotations.NewQuotationForm(
     process.env.CompanyName,
-    process.env.ProjectName,
-    process.env.GroupTitle,
-    process.env.ItemnameOne,
-    process.env.UnitPrices,
-    process.env.ItemNameTwo,
-    process.env.ItemNameThree,
-    process.env.termsConditions,
-    process.env.AgencyFees,
-    process.env.discount,
-    process.env.vatValues,
     process.env.dayCompleteInput,
+    process.env.GroupTitle,
+    process.env.TitleName,
+    process.env.ItemNitPrice,
+    process.env.itemQuantity,
+    process.env.TitleNameTwo,
+    process.env.ItemNitPriceTwo,
+    process.env.itemQuantityTwo,
+    process.env.Agencyfee,
+    process.env.Discount,
+    process.env.Vat,
   );
+  await quotations.QuotationSent();
+  await quotations.ApproveQuotation(process.env.ProjectName);
 });
