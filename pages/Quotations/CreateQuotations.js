@@ -144,6 +144,7 @@ class CreateQuotations {
     await this.MarkSentButton.click();
     await this.MarkSent.click();
   }
+  // Approve Quotation
   async ApproveQuotation(ProjectName) {
     await this.ApproveQuotationButton.click();
     await this.ChooseProject.click();
