@@ -18,10 +18,10 @@ class CreateQuotations {
     this.SaveWithoutProject = page.getByRole("checkbox", {
       name: "Save without a project",
     });
-    this.QuotationDateCalender = page.getByRole("textbox", {
+    this.QuotationDateCalender = page.getByRole("button", {
       name: "Quotation date",
     });
-    this.QuotationDate = page.getByText("21", { exact: true });
+    this.QuotationDate = page.getByRole("button", { name: "21 October" });
     this.TeamName = page.getByRole("button", { name: "Creative" });
 
     this.CurrencyName = page.getByRole("combobox", { name: "Currency" });

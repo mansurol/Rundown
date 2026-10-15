@@ -14,16 +14,15 @@ class CreateNewProject {
       name: "Project name",
     });
     this.ProjectType = page.getByRole("button", { name: "Retainer" });
-    this.StartDateCalender = page.getByRole("textbox", { name: "Start date" });
-    this.StartDate = page.getByText("14", { exact: true });
-    this.EndDateCalender = page.getByRole("textbox", {
+    this.StartDateCalender = page.getByRole("button", { name: "Start date" });
+    this.StartDate = page.getByRole("button", { name: "21 October" });
+    this.EndDateCalender = page.getByRole("button", {
       name: "Expected end date",
     });
-    this.EndDate = page.getByRole("cell", {
-      name: "28",
-      description: "2026-10-28",
-    });
-    this.BriefDescription = page.locator(".tiptap");
+    this.EndDate = page.getByRole("button", { name: "27 October" });
+    this.BriefDescription = page
+      .getByRole("paragraph")
+      .filter({ hasText: /^$/ });
     this.SubmitButton = page.getByRole("button", { name: "Save project" });
   }
 

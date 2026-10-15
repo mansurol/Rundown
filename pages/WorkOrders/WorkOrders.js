@@ -17,12 +17,14 @@ class CreateWorkOrder {
     this.SelectQuotationButton = page.getByRole("button", {
       name: "Use quotation",
     });
-    this.WorkOrderdateCalender = page.getByRole("textbox", {
+    this.WorkOrderdateCalender = page.getByRole("button", {
       name: "Work order date",
     });
+    this.AddWorkOrderDate = page.getByRole("button", { name: "20 October" });
     this.ReceivedFromClient = page.getByRole("textbox", {
       name: "Received from client Optional",
     });
+    this.WorkOrderReceivedDate = page.getByRole("table").getByText("22");
     this.FileInput = page.locator('input[type="file"]');
     this.PdfFile = path.resolve(
       __dirname,
@@ -38,7 +40,7 @@ class CreateWorkOrder {
     this.PaymentDateCalender = page.getByRole("textbox", {
       name: "Milestone 1 due date",
     });
-    this.AddPaymentDate = page.getByRole("cell", { name: "23" });
+    this.AddPaymentDate = page.getByRole("cell", { name: "21" });
 
     this.paymentMilestoneTwo = page.getByRole("button", {
       name: "Add milestone",
@@ -75,7 +77,7 @@ class CreateWorkOrder {
 
   async NewworkOrder(ProjectName) {
     await this.SearchQuotation.fill(ProjectName);
-    const SelectQuotation = page.getByRole("radio", {
+    const SelectQuotation = this.page.getByRole("radio", {
       name: ProjectName,
     });
     await expect(SelectQuotation).toBeVisible();
@@ -83,9 +85,9 @@ class CreateWorkOrder {
     await expect(this.SelectQuotationButton).toBeEnabled();
     await this.SelectQuotationButton.click();
     await this.WorkOrderdateCalender.click();
-    await this.page.getByRole("table").getByText("24", { exact: true }).click();
+    await this.AddWorkOrderDate.click();
     await this.ReceivedFromClient.click();
-    await this.page.getByRole("table").getByText("23", { exact: true }).click();
+    await this.WorkOrderReceivedDate.click();
     await this.FileInput.setInputFiles(this.PdfFile);
 
     await this.PaymentShedule.fill("1st");
