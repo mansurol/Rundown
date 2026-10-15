@@ -75,7 +75,9 @@ class CreateWorkOrder {
 
   async NewworkOrder(ProjectName) {
     await this.SearchQuotation.fill(ProjectName);
-    const SelectQuotation = this.page.getByText(ProjectName, { exact: false });
+    const SelectQuotation = page.getByRole("radio", {
+      name: ProjectName,
+    });
     await expect(SelectQuotation).toBeVisible();
     await SelectQuotation.click();
     await expect(this.SelectQuotationButton).toBeEnabled();

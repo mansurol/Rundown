@@ -1,40 +1,56 @@
-
-
 class Payment {
-    constructor(page) {
-      this.page = page;
-      this.Payments = page.getByRole('link', { name: 'Payments' })
-      this.NewPaymentsButton = page.getByRole('button', { name: 'Record payment (Alt Shift N)' })
-      this.SelectInvoice = page.getByRole('button', { name: 'Select an invoice' })
-      this.WOrkOrderName = page.getByText('GG · GOML · due 28 Sept')
-      this.UseInvoiceButton = page.getByRole('button', { name: 'Use this invoice' })
-      this.PaymentMethod = page.locator('.ant-select.ant-select-lg > .ant-select-suffix > svg')
-      this.SelectPaymentMethod = page.locator('[id="_r_c4__list_1"]');
-      this.RefNumber = page.getByRole('textbox', { name: 'e.g. BEFTN/26/' })
-      this.RemarkText = page.locator('.tiptap')
-      this.SubmitPayment = page.getByRole('button', { name: 'Record payment', exact: true })
-    }
+  constructor(page) {
+    this.page = page;
+    this.Payments = page.getByRole("link", { name: "Payments" });
+    this.NewPaymentsButton = page.getByRole("button", {
+      name: "Record payment Alt Shift N",
+    });
+    this.SelectInvoice = page.getByRole("button", {
+      name: "Choose an invoice Only",
+    });
+    this.SearchInoice = page.getByRole("textbox", {
+      name: "Search by invoice, client or",
+    });
 
-    async goto() {
-      await this.Payments.click();
-    }
+    this.UseInvoiceButton = page.getByRole("button", { name: "Use invoice" });
+    this.ReceivedFromClient = page.getByRole("spinbutton", {
+      name: "Amount received *",
+    });
+    this.PaymentMethod = page.getByRole("radio", { name: "Cash" });
+    this.RefNumber = page.getByRole("textbox", {
+      name: "Reference for bank, cheque or",
+    });
+    this.RemarkText = page.getByRole("button", {
+      name: "Add a note Remarks · optional",
+    });
+    this.SubmitPayment = page.getByRole("button", {
+      name: "Record payment",
+      exact: true,
+    });
+  }
 
-    async CreateInvoiceButton() {
-      await this.NewPaymentsButton.click();
-    }
+  async goto() {
+    await this.Payments.click();
+  }
 
-    async NewInvoice() {
-   
-      await this.SelectInvoice.click()
-      await this.WOrkOrderName.click()
-      await this.UseInvoiceButton.click()
-      await this.PaymentMethod.click()
-      await this.SelectPaymentMethod.click()
-      await this.RefNumber.fill('123456768')
-      await this.RemarkText.fill('testing')
-      await this.SubmitPayment.click()
-    }
- 
+  async CreateInvoiceButton() {
+    await this.NewPaymentsButton.click();
+  }
+
+  async NewPayment(projectName) {
+    await this.SelectInvoice.click();
+    await this.SearchInoice.fill(projectName);
+    const SelectInvoice = this.page.getByRole("radio", {
+      name: projectName,
+    });
+    await SelectInvoice.click();
+    await this.UseInvoiceButton.click();
+    await this.ReceivedFromClient.fill("100");
+    await this.PaymentMethod.click();
+    await this.RefNumber.fill("123456768");
+    await this.RemarkText.click();
+    await this.SubmitPayment.click();
+  }
 }
 
 module.exports = Payment;
