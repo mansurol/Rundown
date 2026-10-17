@@ -18,6 +18,12 @@ test("FullBusinessJourney", async ({ page }) => {
   const invoice = new Invoice(page);
   const payment = new Payment(page);
 
+  //Unique data for each test run
+  const stamp = String(Date.now()).slice(-2);
+  const companyName = `Test ${stamp}`;
+  const projectName = `Web Project ${stamp}`;
+  const contactEmail = `contact${stamp}@gmail.com`;
+  const contactPhone = `01${String(stamp).slice(-9)}`;
   //Login
 
   await test.step("Login", async () => {
@@ -32,54 +38,57 @@ test("FullBusinessJourney", async ({ page }) => {
   await test.step("Create Client", async () => {
     await clients.goto();
     await clients.createClient(
-      process.env.CompanyName,
+      companyName,
       process.env.Address,
       process.env.TIN,
       process.env.BIN,
       process.env.ContactPersonName,
       process.env.ContactPersonDesignation,
-      process.env.ContactPersonEmail,
-      process.env.ContactPersonPhone,
+      contactEmail,
+      contactPhone,
     );
   });
 
   //Project Create
 
-  await test.step("{ProjectCreate", async () => {
+  await test.step("Create Project", async () => {
     await createNewProject.goto();
     await createNewProject.createNewProject();
     await createNewProject.NewProjectForm(
-      process.env.ProjectName,
+      projectName,
       process.env.EProjectBrief,
-      process.env.CompanyName,
+      companyName,
     );
   });
 
   //QuotationCreate
-  await test.step("{QuotationCreate", async () => {
+  await test.step("Create Quotation", async () => {
     await quotations.goto();
     await quotations.CreateQuotations();
     await quotations.NewQuotationForm(
-      process.env.ProjectName,
-      process.env.GroupTitle,
-      process.env.ItemnameOne,
-      process.env.UnitPrices,
-      process.env.ItemNameTwo,
-      process.env.ItemNameThree,
-      process.env.termsConditions,
-      process.env.AgencyFees,
-      process.env.discount,
-      process.env.vatValues,
+      companyName,
       process.env.dayCompleteInput,
+      process.env.GroupTitle,
+      process.env.TitleName,
+      process.env.ItemNitPrice,
+      process.env.itemQuantity,
+      process.env.TitleNameTwo,
+      process.env.ItemNitPriceTwo,
+      process.env.itemQuantityTwo,
+      process.env.Agencyfee,
+      process.env.Discount,
+      process.env.Vat,
     );
+    await quotations.QuotationSent();
+    await quotations.ApproveQuotation(projectName);
   });
 
   //WorkOrder
 
-  await test.step("WorkOrder", async () => {
+  await test.step("Create Work Order", async () => {
     await workOrder.goto();
     await workOrder.CreateWorkOrderButton();
-    await workOrder.NewworkOrder(process.env.ProjectName);
+    await workOrder.NewworkOrder(projectName);
   });
 
   //Invoice
@@ -87,14 +96,14 @@ test("FullBusinessJourney", async ({ page }) => {
   await test.step("Invoice", async () => {
     await invoice.goto();
     await invoice.CreateInvoiceButton();
-    await invoice.NewInvoice(process.env.ProjectName);
+    await invoice.NewInvoice(projectName);
     await invoice.SumitInvoice();
     await invoice.DownloadPDF();
   });
 
-  // await test.step("Payments", async () => {
-  //   await payment.goto();
-  //   await payment.CreateInvoiceButton();
-  //   await payment.NewInvoice();
-  // });
+  await test.step("Payments", async () => {
+    await payment.goto();
+    await payment.CreatePaymentsButton();
+    await payment.NewPayment(projectName);
+  });
 });

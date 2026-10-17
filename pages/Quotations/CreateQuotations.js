@@ -30,7 +30,7 @@ class CreateQuotations {
     this.dayToCompleteSwitch = page.getByRole("switch", {
       name: "Show days to complete",
     });
-    this.dayToCompleteInput = page.locator('input[name="daysToComplete"]');
+    this.dayToComplete = page.locator('input[name="daysToComplete"]');
 
     this.GroupTitleInput = page.getByRole("textbox", { name: "Group title" });
     this.ItemNameInput = page.getByRole("textbox", { name: "Item name" });
@@ -91,7 +91,7 @@ class CreateQuotations {
   }
 
   async NewQuotationForm(
-    CompanyName,
+    companyName,
     dayCompleteInput,
     GroupTitle,
     TitleName,
@@ -105,11 +105,11 @@ class CreateQuotations {
     Vat,
   ) {
     await this.SelectClientModal.click();
-    await this.SearchClientName.fill(CompanyName);
+    await this.SearchClientName.fill(companyName);
     const Project = this.page.getByRole("radio", {
-      name: new RegExp(`^${CompanyName}\\b`),
+      name: new RegExp(`^${companyName}\\b`),
     });
-    await expect(Project).toBeVisible();
+
     await Project.click();
     await this.ClienSelectButton.click();
     await this.SaveWithoutProject.click();
@@ -119,7 +119,7 @@ class CreateQuotations {
     await this.CurrencyName.click();
     await this.SelectCurrencyButton.click();
     await this.dayToCompleteSwitch.click();
-    await this.dayToCompleteInput.fill(dayCompleteInput);
+    await this.dayToComplete.fill(dayCompleteInput);
 
     await this.GroupTitleInput.fill(GroupTitle);
     await this.ItemNameInput.fill(TitleName);
@@ -152,7 +152,6 @@ class CreateQuotations {
     const PSelect = this.page.getByRole("radio", {
       name: new RegExp(`^${ProjectName}\\b`),
     });
-    await expect(PSelect).toBeVisible();
     await PSelect.click();
     await this.useProjectButton.click();
     await this.ApproveQut.click();

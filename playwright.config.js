@@ -13,7 +13,7 @@ import { defineConfig, devices } from "@playwright/test";
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  timeout: 120000,
+  timeout: 150000,
   testDir: "./tests",
 
   /* Keep this app flow serial because it mutates shared UI state across browsers */

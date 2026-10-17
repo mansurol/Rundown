@@ -33,7 +33,7 @@ class Payment {
     await this.Payments.click();
   }
 
-  async CreateInvoiceButton() {
+  async CreatePaymentsButton() {
     await this.NewPaymentsButton.click();
   }
 
