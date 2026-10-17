@@ -2,7 +2,7 @@ class NewUserCreate {
   constructor(page) {
     this.page = page;
     this.Users = page.getByRole("link", { name: "User" });
-    this.NewUserButton = page.getByRole("button", {
+    this.NewUserButton = page.getByRole("link", {
       name: "New user (Alt Shift N)",
     });
     this.Name = page.getByRole("textbox", { name: "Full name" });
