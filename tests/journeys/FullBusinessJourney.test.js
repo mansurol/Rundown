@@ -31,6 +31,8 @@ test("FullBusinessJourney", async ({ page }) => {
     await login.fillEmail(process.env.Email);
     await login.fillPassword(process.env.password);
     await login.clickSignInButton();
+    // Assertion: login should complete successfully
+    await expect(page).not.toHaveURL(/\/login(?:[/?#]|$)/);
   });
 
   //New Client Create
@@ -47,6 +49,9 @@ test("FullBusinessJourney", async ({ page }) => {
       contactEmail,
       contactPhone,
     );
+    await expect(
+      page.getByRole("heading", { name: companyName }),
+    ).toBeVisible();
   });
 
   //Project Create
@@ -59,6 +64,9 @@ test("FullBusinessJourney", async ({ page }) => {
       process.env.EProjectBrief,
       companyName,
     );
+    await expect(
+      page.getByRole("heading", { name: projectName }),
+    ).toBeVisible();
   });
 
   //QuotationCreate
@@ -81,6 +89,13 @@ test("FullBusinessJourney", async ({ page }) => {
     );
     await quotations.QuotationSent();
     await quotations.ApproveQuotation(projectName);
+
+    await expect(
+      page
+        .locator(".jc__status:visible")
+        .filter({ hasText: "Approved" })
+        .first(),
+    ).toBeVisible();
   });
 
   //WorkOrder
@@ -89,6 +104,10 @@ test("FullBusinessJourney", async ({ page }) => {
     await workOrder.goto();
     await workOrder.CreateWorkOrderButton();
     await workOrder.NewworkOrder(projectName);
+
+    await expect(
+      page.locator("h2.jc__title", { hasText: "Work order approved" }).first(),
+    ).toBeVisible();
   });
 
   //Invoice
@@ -98,6 +117,7 @@ test("FullBusinessJourney", async ({ page }) => {
     await invoice.CreateInvoiceButton();
     await invoice.NewInvoice(projectName);
     await invoice.SumitInvoice();
+    await expect(invoice.SubmittedInvoice).toBeVisible();
     await invoice.DownloadPDF();
   });
 
@@ -105,5 +125,9 @@ test("FullBusinessJourney", async ({ page }) => {
     await payment.goto();
     await payment.CreatePaymentsButton();
     await payment.NewPayment(projectName);
+    await expect(page.getByRole("heading", { name: /^WO-/ })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: projectName }),
+    ).toBeVisible();
   });
 });
