@@ -1,11 +1,11 @@
 import { test, expect } from "@playwright/test";
-import Login from "../pages/Auth/Login";
-import Clients from "../pages/clients/Clients";
-import CreateNewProject from "../pages/Project/CreateNewProject";
-import Quotation from "../pages/Quotations/CreateQuotations";
-import WorkOrder from "../pages/WorkOrders/WorkOrders";
-import Invoice from "../pages/Invoices/CreateInvoices";
-import Payment from "../pages/Payments/Payment";
+import Login from "../../pages/Auth/Login";
+import Clients from "../../pages/clients/Clients";
+import CreateNewProject from "../../pages/Project/CreateNewProject";
+import Quotation from "../../pages/Quotations/CreateQuotations";
+import WorkOrder from "../../pages/WorkOrders/WorkOrders";
+import Invoice from "../../pages/Invoices/CreateInvoices";
+import Payment from "../../pages/Payments/Payment";
 
 require("dotenv").config();
 

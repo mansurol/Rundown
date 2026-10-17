@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Read environment variables from file.
@@ -13,8 +13,8 @@ import { defineConfig, devices } from '@playwright/test';
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-    timeout: 120000,
-  testDir: './tests',
+  timeout: 120000,
+  testDir: "./tests",
 
   /* Keep this app flow serial because it mutates shared UI state across browsers */
   fullyParallel: false,
@@ -25,7 +25,7 @@ export default defineConfig({
   /* Avoid parallel browser runs in this project to prevent shared-state crashes. */
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
@@ -36,15 +36,26 @@ export default defineConfig({
     },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
   },
 
   /* This quotation flow is unstable in Firefox/WebKit due to app/browser interaction issues.
      Keep it on Chromium until the underlying app/browser problem is fixed. */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "single",
+      testIgnore: "**/journeys/**",
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "journeys",
+      testMatch: "**/journeys/**/*.test.js",
+      use: {
+        ...devices["Desktop Chrome"],
+        video: "on",
+        screenshot: "on",
+        trace: "on",
+      },
     },
 
     /* Test against mobile viewports. */
@@ -75,4 +86,3 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-

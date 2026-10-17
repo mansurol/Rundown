@@ -4,9 +4,11 @@ import RolesCreate from "../pages/Roles/RolesCreate";
 
 require("dotenv").config();
 
-test("CreateRoles", async ({ page }) => {
+test("RolesCreate", async ({ page }) => {
   const rolesCreate = new RolesCreate(page);
   const login = new Login(page);
+
+  const roleName = `Admin ${Date.now()}`;
 
   await page.goto(process.env.Url);
 
@@ -18,5 +20,7 @@ test("CreateRoles", async ({ page }) => {
   //Navigate to rolesCreate page
   await rolesCreate.goto();
   await rolesCreate.CreateRolesButton();
-  await rolesCreate.CreateRoles(process.env.RoleName);
+  await rolesCreate.CreateRoles(process.env.roleName);
+
+  await expect(page.getByText(process.env.roleName).first()).toBeVisible();
 });

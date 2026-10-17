@@ -7,6 +7,10 @@ test("CreateUsers", async ({ page }) => {
   const userCreate = new NewUserCreate(page);
   const login = new Login(page);
 
+  const stamp = Date.now();
+  const userName = `mansurol ${stamp}`;
+  const userMail = `mansurol${stamp}@co.design`;
+
   await page.goto(process.env.Url);
 
   //Login
@@ -18,8 +22,8 @@ test("CreateUsers", async ({ page }) => {
   await userCreate.goto();
   await userCreate.CreateUserButton();
   await userCreate.CreateUser(
-    process.env.name,
-    process.env.mail,
+    userName,
+    userMail,
     process.env.pass,
     process.env.repass,
     process.env.roleName,

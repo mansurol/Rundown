@@ -19,9 +19,9 @@ class NewUserCreate {
   async CreateUserButton() {
     await this.NewUserButton.click();
   }
-  async CreateUser(name, mail, pass, repass, roleName) {
-    await this.Name.fill(name);
-    await this.Email.fill(mail);
+  async CreateUser(userName, userMail, pass, repass, roleName) {
+    await this.Name.fill(userName);
+    await this.Email.fill(userMail);
     await this.Password.fill(pass);
     await this.RePassword.fill(repass);
     const SetRole = this.page.getByRole("checkbox", {
