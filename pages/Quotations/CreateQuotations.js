@@ -65,17 +65,17 @@ class CreateQuotations {
     this.MarkSent = page.getByRole("button", { name: "Sent Quotation" });
 
     this.ApproveQuotationButton = page.getByRole("button", {
-      name: "Approve",
-      exact: true,
+      name: "Mark approved",
     });
     this.ChooseProject = page.getByRole("button", { name: "Choose a project" });
     this.ProjectSelect = page.getByRole("radio", {
       name: "AA Website AAA Planning",
     });
     this.useProjectButton = page.getByRole("button", { name: "Use project" });
-    this.ApproveQut = page
-      .getByRole("dialog")
-      .getByRole("button", { name: "Approve" });
+    this.ApproveQut = page.getByRole("button", {
+      name: "Approve",
+      exact: true,
+    });
 
     this.SearchProjectName = page.getByRole("textbox", {
       name: "Search by project or client",

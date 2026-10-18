@@ -21,10 +21,12 @@ class CreateWorkOrder {
       name: "Work order date",
     });
     this.AddWorkOrderDate = page.getByRole("button", { name: "20 October" });
-    this.ReceivedFromClient = page.getByRole("textbox", {
+    this.ReceivedFromClient = page.getByRole("button", {
       name: "Received from client Optional",
     });
-    this.WorkOrderReceivedDate = page.getByRole("table").getByText("22");
+    this.WorkOrderReceivedDate = page.getByRole("button", {
+      name: "21 October",
+    });
     this.FileInput = page.locator('input[type="file"]');
     this.PdfFile = path.resolve(
       __dirname,
@@ -37,10 +39,10 @@ class CreateWorkOrder {
     this.PaymentPersentange = page.getByRole("spinbutton", {
       name: "Milestone 1 share",
     });
-    this.PaymentDateCalender = page.getByRole("textbox", {
+    this.PaymentDateCalender = page.getByRole("button", {
       name: "Milestone 1 due date",
     });
-    this.AddPaymentDate = page.getByRole("cell", { name: "21" });
+    this.AddPaymentDate = page.getByRole("button", { name: "20 October" });
 
     this.paymentMilestoneTwo = page.getByRole("button", {
       name: "Add milestone",
@@ -51,13 +53,10 @@ class CreateWorkOrder {
     this.PaymentPersentangTwo = page.getByRole("spinbutton", {
       name: "Milestone 2 share",
     });
-    this.PaymentDateCalenderTwo = page.getByRole("textbox", {
+    this.PaymentDateCalenderTwo = page.getByRole("button", {
       name: "Milestone 2 due date",
     });
-    this.AddPaymentDateTwo = page.getByRole("cell", {
-      name: "30",
-      description: "2026-09-30",
-    });
+    this.AddPaymentDateTwo = page.getByRole("button", { name: "26 October" });
     this.RaiseWorkOrder = page.getByRole("button", {
       name: "Raise work order",
     });

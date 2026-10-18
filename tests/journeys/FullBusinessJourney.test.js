@@ -142,7 +142,6 @@ test("FullBusinessJourney", async ({ page }) => {
       page.getByText("Payment recorded", { exact: true }),
     ).toBeVisible();
 
-    // toast মিলিয়ে গেলেও যা থাকে, list এ আমাদের project এর নাম
     await expect(page.getByText(projectName).first()).toBeVisible({
       timeout: 15000,
     });
