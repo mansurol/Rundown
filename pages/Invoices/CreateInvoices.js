@@ -36,7 +36,7 @@ class CreateInvoice {
       .first();
     this.downloadInvoice = page.getByRole("button", { name: "Download PDF" });
     this.FinalDownload = page
-      .getByLabel("PDF optionsChoose what")
+      .getByRole("contentinfo")
       .getByRole("button", { name: "Download PDF" });
   }
 

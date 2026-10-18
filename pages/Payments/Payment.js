@@ -3,7 +3,7 @@ class Payment {
     this.page = page;
     this.Payments = page.getByRole("link", { name: "Payments" });
     this.NewPaymentsButton = page.getByRole("button", {
-      name: "Record payment Alt Shift N",
+      name: "Record payment",
     });
     this.SelectInvoice = page.getByRole("button", {
       name: "Choose an invoice Only",

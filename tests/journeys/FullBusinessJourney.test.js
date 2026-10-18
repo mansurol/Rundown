@@ -105,8 +105,13 @@ test("FullBusinessJourney", async ({ page }) => {
     await workOrder.CreateWorkOrderButton();
     await workOrder.NewworkOrder(projectName);
 
+    await expect(page.getByText(projectName).first()).toBeVisible({
+      timeout: 15000,
+    });
+
+    // ২. Status "Approved"
     await expect(
-      page.locator("h2.jc__title", { hasText: "Work order approved" }).first(),
+      page.getByText("Approved", { exact: true }).first(),
     ).toBeVisible();
   });
 
@@ -117,7 +122,15 @@ test("FullBusinessJourney", async ({ page }) => {
     await invoice.CreateInvoiceButton();
     await invoice.NewInvoice(projectName);
     await invoice.SumitInvoice();
-    await expect(invoice.SubmittedInvoice).toBeVisible();
+
+    await expect(page.getByText(projectName).first()).toBeVisible({
+      timeout: 15000,
+    });
+
+    await expect(
+      page.getByText("Submitted", { exact: true }).first(),
+    ).toBeVisible();
+
     await invoice.DownloadPDF();
   });
 
@@ -125,9 +138,13 @@ test("FullBusinessJourney", async ({ page }) => {
     await payment.goto();
     await payment.CreatePaymentsButton();
     await payment.NewPayment(projectName);
-    await expect(page.getByRole("heading", { name: /^WO-/ })).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: projectName }),
+      page.getByText("Payment recorded", { exact: true }),
     ).toBeVisible();
+
+    // toast মিলিয়ে গেলেও যা থাকে, list এ আমাদের project এর নাম
+    await expect(page.getByText(projectName).first()).toBeVisible({
+      timeout: 15000,
+    });
   });
 });

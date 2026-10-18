@@ -1,7 +1,9 @@
 class Clients {
   constructor(page) {
     this.page = page;
-    this.ClientsPage = page.getByRole("link", { name: "Clients" });
+    this.ClientsPage = page
+      .getByRole("menuitem", { name: "Clients" })
+      .getByRole("link");
     this.CreateClient = page.getByRole("button", { name: /^New Client/ });
     this.InputCompanyName = page.getByRole("textbox", {
       name: "Company name",

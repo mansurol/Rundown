@@ -6,7 +6,7 @@ class CreateNewProject {
       .getByRole("link");
 
     this.NewProjectButton = page.getByRole("button", {
-      name: "New Project (Alt Shift N)",
+      name: "New Project ",
     });
 
     this.ClienSubmittButton = page.getByRole("button", { name: "Use client" });
