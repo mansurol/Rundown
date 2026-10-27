@@ -4,16 +4,12 @@ class EditClients {
   constructor(page) {
     this.page = page;
 
-    this.ClientsPage = page.getByRole("link", {
-      name: "Clients",
-    });
+    this.ClientSection = page.getByRole("link", { name: "Clients" });
 
     this.ClientSearch = page.getByRole("textbox", {
       name: "Search by name, contact or",
     });
     this.EditClientButton = page.getByRole("link", { name: "Edit client" });
-
-    this.CName = page.getByRole("textbox", { name: "Company name" });
 
     this.CAddress = page.getByRole("textbox", { name: "Address" });
 
@@ -27,7 +23,7 @@ class EditClients {
   }
 
   async goto() {
-    await this.ClientsPage.click();
+    await this.ClientSection.click();
   }
 
   async ClientEdit(CompanyName) {
@@ -47,8 +43,7 @@ class EditClients {
     await this.EditClientButton.click();
   }
 
-  async updateClient(ECompanyName, EAddress, EBIN, EContactPersonName) {
-    await this.CName.fill(ECompanyName);
+  async updateClient(EAddress, EBIN, EContactPersonName) {
     await this.CBIN.fill(EBIN);
     await this.CAddress.fill(EAddress);
     await this.CContactPersonName.fill(EContactPersonName);

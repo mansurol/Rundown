@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
-import Login from "../pages/Auth/Login";
-import CreateNewProject from "../pages/Project/CreateNewProject";
+import Login from "../../pages/Auth/Login";
+import CreateNewProject from "../../pages/Project/CreateNewProject";
 
 require("dotenv").config();
 

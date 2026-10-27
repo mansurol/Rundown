@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import Login from "../pages/Auth/Login";
+import Login from "../../pages/Auth/Login";
 require("dotenv").config();
 
 test("Login with invalid password", async ({ page }) => {

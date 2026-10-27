@@ -1,3 +1,4 @@
+const { expect } = require("@playwright/test");
 class CreateNewProject {
   constructor(page) {
     this.page = page;
@@ -8,6 +9,9 @@ class CreateNewProject {
     this.NewProjectButton = page.getByRole("button", {
       name: "New Project ",
     });
+    this.ClientFind = page.getByRole("textbox", {
+      name: "Search by company name",
+    });
 
     this.ClienSubmittButton = page.getByRole("button", { name: "Use client" });
     this.ProjectNameInput = page.getByRole("textbox", {
@@ -15,7 +19,7 @@ class CreateNewProject {
     });
     this.ProjectType = page.getByRole("button", { name: "Retainer" });
     this.StartDateCalender = page.getByRole("button", { name: "Start date" });
-    this.StartDate = page.getByRole("button", { name: "21 October" });
+    this.StartDate = page.getByRole("button", { name: "24 October" });
     this.EndDateCalender = page.getByRole("button", {
       name: "Expected end date",
     });
@@ -34,6 +38,7 @@ class CreateNewProject {
     await this.NewProjectButton.click();
   }
   async NewProjectForm(projectName, EProjectBrief, CompanyName) {
+    await this.ClientFind.fill(CompanyName);
     const ClientSelect = this.page.getByRole("radio", {
       name: CompanyName,
     });
@@ -47,6 +52,12 @@ class CreateNewProject {
     await this.EndDate.click();
     await this.BriefDescription.fill(EProjectBrief);
     await this.SubmitButton.click();
+    await expect(
+      this.page.getByRole("heading", {
+        name: projectName,
+        exact: true,
+      }),
+    ).toBeVisible();
   }
 }
 

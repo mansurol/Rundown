@@ -18,7 +18,6 @@ test("EditClient", async ({ page }) => {
   await EditClient.goto();
   await EditClient.ClientEdit(process.env.CompanyName);
   await EditClient.updateClient(
-    process.env.ECompanyName,
     process.env.EAddress,
     process.env.EBIN,
     process.env.EContactPersonName,
