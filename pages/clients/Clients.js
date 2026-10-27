@@ -44,9 +44,9 @@ class Clients {
   ) {
     await this.CreateClient.click();
     await this.InputCompanyName.fill(CompanyName);
-    await this.InputAddress.fill(Address);
     await this.InputTIN.fill(TIN);
     await this.InputBIN.fill(BIN);
+    await this.InputAddress.fill(Address);
     await this.ContactPersonName.fill(ContactPersonName);
     await this.ContactPersonDesignation.fill(ContactPersonDesignation);
     await this.ContactPersonEmail.fill(ContactPersonEmail);

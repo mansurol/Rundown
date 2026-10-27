@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
-import Login from "../pages/Auth/Login";
-import Clients from "../pages/clients/Clients";
+import Login from "../../pages/Auth/Login";
+import Clients from "../../pages/clients/Clients";
+
 require("dotenv").config();
 
 test("Clients", async ({ page }) => {
@@ -25,4 +26,5 @@ test("Clients", async ({ page }) => {
     process.env.ContactPersonEmail,
     process.env.ContactPersonPhone,
   );
+  await expect(page.getByText("Client added successfully")).toBeVisible();
 });

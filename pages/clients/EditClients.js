@@ -1,34 +1,63 @@
-class  EditClients {
-    constructor(page) {
-      this.page = page;
-      this.ClientsPage = page.getByRole('link', { name: 'Clients' })
-      this.ClientEDModal = page.getByRole('button').filter({ hasText: /^$/ }).nth(3)
-      this.ClienteditForm = page.getByText('Edit')
-      this.CName = page.getByRole('textbox', { name: 'Enter the registered company' })
-      this.CAddress = page.getByRole('textbox', { name: 'Enter client address' })
-      this.CBIN = page.getByRole('textbox', { name: 'Enter BIN' })
-      this.CContactPersonName = page.getByRole('textbox', { name: 'Full name' })
-      this.ChangeSubmitButton =page.getByRole('button', { name: 'Save changes' })
-    }
+const { expect } = require("@playwright/test");
 
-      async goto() {
-      await this.ClientsPage.click();
+class EditClients {
+  constructor(page) {
+    this.page = page;
+
+    this.ClientsPage = page.getByRole("link", {
+      name: "Clients",
+    });
+
+    this.ClientSearch = page.getByRole("textbox", {
+      name: "Search by name, contact or",
+    });
+    this.EditClientButton = page.getByRole("link", { name: "Edit client" });
+
+    this.CName = page.getByRole("textbox", { name: "Company name" });
+
+    this.CAddress = page.getByRole("textbox", { name: "Address" });
+
+    this.CBIN = page.getByRole("textbox", { name: "BIN" });
+
+    this.CContactPersonName = page.getByRole("textbox", { name: "Full name" });
+
+    this.ChangeSubmitButton = page.getByRole("button", {
+      name: "Save changes",
+    });
   }
-   
 
-      async ClientEdit() {
-      await this.ClientEDModal.click();
-    await this.ClienteditForm.click();
-        await this.CName.fill(process.env.ECompanyName);
-        await this.CAddress.fill(process.env.EAddress);
-        await this.CBIN.fill(process.env.EBIN);
-        await this.CContactPersonName.fill(process.env.EContactPersonName);
-        await this.ChangeSubmitButton.click();
+  async goto() {
+    await this.ClientsPage.click();
   }
 
-    
- 
+  async ClientEdit(CompanyName) {
+    await this.ClientSearch.fill(CompanyName);
 
+    const clientDetails = this.page.locator("a.list-table-row").filter({
+      has: this.page.getByText(CompanyName, {
+        exact: true,
+      }),
+    });
+
+    // Verify the searched client is visible
+    await expect(clientDetails.first()).toBeVisible();
+
+    // Open client details
+    await clientDetails.first().click();
+    await this.EditClientButton.click();
   }
-  
-  module.exports = EditClients;
+
+  async updateClient(ECompanyName, EAddress, EBIN, EContactPersonName) {
+    await this.CName.fill(ECompanyName);
+    await this.CBIN.fill(EBIN);
+    await this.CAddress.fill(EAddress);
+    await this.CContactPersonName.fill(EContactPersonName);
+
+    await this.ChangeSubmitButton.click();
+
+    // Verify Save changes button is no longer visible
+    await expect(this.ChangeSubmitButton).toBeHidden();
+  }
+}
+
+module.exports = EditClients;
