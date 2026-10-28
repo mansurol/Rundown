@@ -1,15 +1,11 @@
 import { test, expect } from "@playwright/test";
-import Login from "../pages/Auth/Login";
-import NewUserCreate from "../pages/User/NewUserCreate";
+import Login from "../../pages/Auth/Login";
+import NewUserCreate from "../../pages/User/NewUserCreate";
 require("dotenv").config();
 
 test("CreateUsers", async ({ page }) => {
   const userCreate = new NewUserCreate(page);
   const login = new Login(page);
-
-  const stamp = Date.now();
-  const userName = `mansurol ${stamp}`;
-  const userMail = `mansurol${stamp}@co.design`;
 
   await page.goto(process.env.Url);
 
@@ -22,8 +18,8 @@ test("CreateUsers", async ({ page }) => {
   await userCreate.goto();
   await userCreate.CreateUserButton();
   await userCreate.CreateUser(
-    userName,
-    userMail,
+    process.env.usrName,
+    process.env.userMail,
     process.env.pass,
     process.env.repass,
     process.env.roleName,
