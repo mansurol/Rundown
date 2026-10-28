@@ -1,14 +1,12 @@
 import { test, expect } from "@playwright/test";
-import Login from "../pages/Auth/Login";
-import RolesCreate from "../pages/Roles/RolesCreate";
+import Login from "../../pages/Auth/Login";
+import RolesCreate from "../../pages/Roles/RolesCreate";
 
 require("dotenv").config();
 
 test("RolesCreate", async ({ page }) => {
   const rolesCreate = new RolesCreate(page);
   const login = new Login(page);
-
-  const roleName = `Admin ${Date.now()}`;
 
   await page.goto(process.env.Url);
 

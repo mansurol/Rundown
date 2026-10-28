@@ -7,6 +7,11 @@ class RolesCreate {
     this.ClientsCreate = page.getByRole("checkbox", {
       name: "Clients: Create",
     });
+    this.ProjectCreate = page.getByRole("checkbox", {
+      name: "Projects: Create",
+    });
+    this.ProjectView = page.getByRole("checkbox", { name: "Projects: View" });
+    this.SaveChange = page.getByRole("button", { name: "Save changes" });
     this.ClientsView = page.getByRole("checkbox", { name: "Clients: View" });
     this.ClientsUpdate = page.getByRole("checkbox", {
       name: "Clients: Update",
@@ -37,11 +42,16 @@ class RolesCreate {
     await this.ClientsDelete.click();
 
     //UserAccess
-    await this.UsersCreate.check();
-    await this.UsersView.check();
-    await this.UsersUpdate.check();
-    await this.UsersDelete.check();
+    await this.UsersCreate.click();
+    await this.UsersView.click();
+    await this.UsersUpdate.click();
+    await this.UsersDelete.click();
     await this.page.getByRole("button", { name: "Create role" }).click();
+  }
+  async updateRoles() {
+    await this.ProjectCreate.click();
+    await this.ProjectView.click();
+    await this.SaveChange.click();
   }
 }
 
