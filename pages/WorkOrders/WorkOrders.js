@@ -7,6 +7,10 @@ class CreateWorkOrder {
       name: "Work orders",
       exact: true,
     });
+    this.SearchWorkOrder = page.getByRole("textbox", {
+      name: "Search by client, project or",
+    });
+    this.ProjectEditBtn = page.getByRole("button", { name: "Edit" });
     this.NewWorkOrderButton = page.getByRole("button", {
       name: /^New Work Order/,
     });
@@ -57,6 +61,21 @@ class CreateWorkOrder {
       name: "Milestone 2 due date",
     });
     this.AddPaymentDateTwo = page.getByRole("button", { name: "26 October" });
+
+    this.paymentMilestoneThree = page.getByRole("button", {
+      name: "Add milestone",
+    });
+    this.PaymentSheduleThree = page.getByRole("textbox", {
+      name: "Milestone 3 name",
+    });
+    this.PaymentPersentangThree = page.getByRole("spinbutton", {
+      name: "Milestone 3 share",
+    });
+    this.PaymentDateCalenderThree = page.getByRole("button", {
+      name: "Milestone 3 due date",
+    });
+    this.AddPaymentDateThree = page.getByRole("button", { name: "27 October" });
+
     this.RaiseWorkOrder = page.getByRole("button", {
       name: "Raise work order",
     });
@@ -64,6 +83,10 @@ class CreateWorkOrder {
     this.FinalApproveWorkOrder = page
       .getByRole("dialog")
       .getByRole("button", { name: "Approve" });
+
+    this.SaveChange = page.getByRole("button", {
+      name: "Save changes",
+    });
   }
 
   async goto() {
@@ -101,6 +124,22 @@ class CreateWorkOrder {
     await this.RaiseWorkOrder.click();
     await this.ApproveWorkOrder.click();
     await this.FinalApproveWorkOrder.click();
+  }
+
+  async EdtWorkOrder(ProjectName) {
+    await this.SearchWorkOrder.fill(ProjectName);
+    const SelectProject = this.page.getByRole("link", {
+      name: ProjectName,
+    });
+    await SelectProject.click();
+    await this.ProjectEditBtn.click();
+    await this.PaymentPersentangTwo.fill("25");
+    await this.paymentMilestoneThree.click();
+    await this.PaymentSheduleThree.fill("3rd");
+    await this.PaymentPersentangThree.fill("25");
+    await this.PaymentDateCalenderThree.click();
+    await this.AddPaymentDateThree.click();
+    await this.SaveChange.click();
   }
 }
 

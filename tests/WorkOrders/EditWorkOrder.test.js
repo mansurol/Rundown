@@ -1,10 +1,10 @@
 import { test } from "@playwright/test";
-import Login from "../pages/Auth/Login";
-import WorkOrder from "../pages/WorkOrders/WorkOrders";
+import Login from "../../pages/Auth/Login";
+import WorkOrder from "../../pages/WorkOrders/WorkOrders";
 
 require("dotenv").config();
 
-test("WorkOrder", async ({ page }) => {
+test("EditWorkOrder", async ({ page }) => {
   const login = new Login(page);
   const workOrder = new WorkOrder(page);
 
@@ -16,6 +16,5 @@ test("WorkOrder", async ({ page }) => {
   await login.clickSignInButton();
 
   await workOrder.goto();
-  await workOrder.CreateWorkOrderButton();
-  await workOrder.NewworkOrder(process.env.ProjectName);
+  await workOrder.EdtWorkOrder(process.env.ProjectName);
 });

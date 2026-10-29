@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
-import Login from "../pages/Auth/Login";
-import Invoice from "../pages/Invoices/CreateInvoices";
+import Login from "../../pages/Auth/Login";
+import Invoice from "../../pages/Invoices/CreateInvoices";
 
 require("dotenv").config();
 
