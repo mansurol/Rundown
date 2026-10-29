@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import Login from "../pages/Auth/Login";
-import Quotation from "../pages/Quotations/CreateQuotations";
+import Login from "../../pages/Auth/Login";
+import Quotation from "../../pages/Quotations/CreateQuotations";
 require("dotenv").config();
 
 test("CreateQuotations", async ({ page }) => {
